@@ -13,8 +13,7 @@ Usage: $progname [-x <macprefix>] [-r <realm>] [-p <password>] <macsuffix> <exte
   -r: realm of SIP server (default: asterisk)
   -p: SIP password
 
-Example: \"$progname -x 000412 -r pbxrealm -p 84aa83 3BFA37 301\" will generate 0004123BFA37.xml
-"
+Example: \"$progname -x 000412 -r pbxrealm -p 84aa83 3BFA37 301\" will generate 0004123BFA37.xml"
 
 while getopts x:r:p:h flag
   do
