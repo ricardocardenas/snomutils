@@ -4,16 +4,16 @@
 macprefix=000413
 realm=asterisk
 password=888aaa
+progname="$(basename $0)"
 
-usage="
-$(basename $0): Create SNOM provisioning XML file.
+usage="$progname: Create SNOM provisioning XML file.
 
-Usage: $(basename $0) [-x <macprefix>] [-r <realm>] [-p <password>] <mac> <extension>
-  -x: prefix prepended to MAC address (default: 000413)
+Usage: $progname [-x <macprefix>] [-r <realm>] [-p <password>] <macsuffix> <extension>
+  -x: macprefix (default: 000413)
   -r: realm of SIP server (default: asterisk)
   -p: SIP password
 
-Example: \"$(basename $0) -x 000412 -r pbxrealm -p 84aa83 3BFA37 301\" will generate 0004B23BFA37.xml
+Example: \"$progname -x 000412 -r pbxrealm -p 84aa83 3BFA37 301\" will generate 0004123BFA37.xml
 "
 
 while getopts x:r:p:h flag
@@ -29,7 +29,7 @@ while getopts x:r:p:h flag
         password=$OPTARG
         ;;
       h)
-        echo $usage
+        echo "$usage"
         exit
         ;;
     esac
@@ -37,7 +37,7 @@ while getopts x:r:p:h flag
 shift $(( OPTIND - 1 ))  # shift past the last flag or argument
 
 if [ $# != 2 ]; then
-  echo $usage
+  echo "$usage"
   exit
 fi
 
