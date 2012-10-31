@@ -15,13 +15,14 @@ Usage: $progname [-x <macprefix>] [-r <realm>] [-p <password>] <macsuffix> <exte
 
 Example: \"$progname -x 000412 -r pbxrealm -p 84aa83 3BFA37 301\" will generate 0004123BFA37.xml"
 
-while getopts x:r:p:h flag
+while getopts :x:r:p:h flag
   do
     case $flag in
       x) macprefix=$OPTARG;;
       r) realm=$OPTARG;;
       p) password=$OPTARG;;
       h) echo "$usage"; exit;;
+      \?) echo "Invalid option -$OPTARG"; echo "$usage"; exit;;
     esac
   done
 shift $(( OPTIND - 1 ))  # shift past the last flag or argument
