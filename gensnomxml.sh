@@ -46,7 +46,7 @@ extension=$2
 xmlfile=`echo -n $macprefix$mac | tr '[a-z]' '[A-Z]'`.xml
 
 echo -n "File $xmlfile, extension $extension, password hash $extension:$realm:$password..."
-hash=`echo -n "$extension:$realm:$password" | openssl dgst -md5 | awk '{print $1}'`
+hash=`echo -n "$extension:$realm:$password" | md5sum | awk '{print $1}'`
 
 #echo "Removing file $xmlfile..."
 rm -rf $xmlfile
