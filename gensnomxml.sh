@@ -18,19 +18,10 @@ Example: \"$progname -x 000412 -r pbxrealm -p 84aa83 3BFA37 301\" will generate 
 while getopts x:r:p:h flag
   do
     case $flag in
-      x)
-        macprefix=$OPTARG
-        ;;
-      r)
-        realm=$OPTARG
-        ;;
-      p)
-        password=$OPTARG
-        ;;
-      h)
-        echo "$usage"
-        exit
-        ;;
+      x) macprefix=$OPTARG;;
+      r) realm=$OPTARG;;
+      p) password=$OPTARG;;
+      h) echo "$usage"; exit;;
     esac
   done
 shift $(( OPTIND - 1 ))  # shift past the last flag or argument
