@@ -1,26 +1,37 @@
 #!/bin/bash
 
 # defaults
-macprefix=000413
-realm=asterisk
-password=888aaa
 progname="$(basename $0)"
+macprefix="000413"
+realm="asterisk"
+password="888aaa"
+addlxml=""
+userhost=""
 
 usage="$progname: Create SNOM provisioning XML file.
 
-Usage: $progname [-x <macprefix>] [-r <realm>] [-p <password>] <macsuffix> <extension>
+Usage: $progname [-x <macprefix>] [-r <realm>] [-p <password>] [-i <additional XML text>]
+                    [-g <user_host_ip_or-name>] <macsuffix> <extension>
+  -p: SIP password
   -x: macprefix (default: 000413)
   -r: realm of SIP server (default: asterisk)
-  -p: SIP password
+  -g: user_host (Snom parameter, SIP registration host)
+  -a: include additional XML text in config file phone settings
+  -h: print help and exit
 
-Example: \"$progname -x 000412 -r pbxrealm -p 84aa83 3BFA37 301\" will generate 0004123BFA37.xml"
+Examples: \"$progname -x 000412 -r pbxrealm -p 84aa83 -g 190.187.43.2 3BFA37 301\" generates 0004123BFA37.xml
+          \"$progname -a '<dhcp perm=\"\">on</dhcp>' 3EF23A 7004\" generates 00041333EF23A.xml"
 
-while getopts :x:r:p:h flag
+while getopts :x:r:p:a:g:h flag
   do
     case $flag in
-      x) macprefix=$OPTARG;;
-      r) realm=$OPTARG;;
-      p) password=$OPTARG;;
+      p) password="$OPTARG";;
+      x) macprefix="$OPTARG";;
+      r) realm="$OPTARG";;
+      g) userhost="<user_host idx=\"1\" perm=\"\">$OPTARG</user_host>
+";;
+      a) addlxml="$OPTARG
+";;
       h) echo "$usage"; exit;;
       \?) echo "Invalid option -$OPTARG"; echo "$usage"; exit;;
     esac
@@ -48,11 +59,11 @@ cat > $xmlfile << _EOF_
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
 <phone-settings e="2">
-<phone_name perm="RW"></phone_name>
-<user_realname idx="1" perm="">$extension</user_realname>
+<phone_name perm=""></phone_name>
+$userhost<user_realname idx="1" perm="">$extension</user_realname>
 <user_name idx="1" perm="">$extension</user_name>
 <user_hash idx="1" perm="">$hash</user_hash>
-</phone-settings>
+$addlxml</phone-settings>
 </settings>
 _EOF_
 
