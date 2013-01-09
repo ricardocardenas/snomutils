@@ -11,7 +11,7 @@ userhost=""
 usage="$progname: Create SNOM provisioning XML file.
 
 Usage: $progname [-x <macprefix>] [-r <realm>] [-p <password>] [-i <additional XML text>]
-                    [-g <user_host_ip_or-name>] <macsuffix> <extension>
+                    [-g <user_host_ip_or_name>] <macsuffix> <extension>
   -p: SIP password
   -x: macprefix (default: 000413)
   -r: realm of SIP server (default: asterisk)
