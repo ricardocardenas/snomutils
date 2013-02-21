@@ -69,20 +69,20 @@ def get_type(mac) :
         return "unknown"
 
 def serviceLogin(username, password) :
-  global server, host
-  server = None
-  scheme = "https"
-  host = "provisioning.snom.com"
-  port = "8083"
-  path = "xmlrpc"
-  server = ServerProxy(scheme + "://" + username + ":" + password + "@" + host + ":" + port + "/" + path + "/",
-                       verbose=False, allow_none=True)
-  try:
-    server.network.echo("ping")
-  except Error, err:
-    print "  {2}Error{3}: {0} {1}".format(err.errcode, err.errmsg, bcolors.FAIL, bcolors.ENDC)
-    return False
-  return True
+    global server, host
+    server = None
+    scheme = "https"
+    host = "provisioning.snom.com"
+    port = "8083"
+    path = "xmlrpc"
+    server = ServerProxy(scheme + "://" + username + ":" + password + "@" + host + ":" + port + "/" + path + "/",
+                         verbose=False, allow_none=True)
+    try:
+        server.network.echo("ping")
+    except Error, err:
+        print "  {2}Error{3}: {0} {1}".format(err.errcode, err.errmsg, bcolors.FAIL, bcolors.ENDC)
+        return False
+    return True
 
 def get_redirection_target(mac, phonetype):
     global host
