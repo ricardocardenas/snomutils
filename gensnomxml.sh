@@ -23,7 +23,7 @@ Usage: $progname [-x <macprefix>] [-r <realm>] [-p <password>] [-i <additional X
   -h: print help and exit
 
 Examples: \"$progname -x 000412 -r pbxrealm -p 84aa83 -g 190.187.43.2 3BFA37 301\" generates 0004123BFA37.xml
-          \"$progname -a '<dhcp perm=\"\">on</dhcp>' 0004133EF23A 7004 7010\" generates 00041333EF23A.xml"
+          \"$progname -p pswd -a '<dhcp perm=\"\">on</dhcp>' 0004133EF23A 7004 7010\" generates 00041333EF23A.xml"
 
 while getopts :x:r:p:a:g:h flag
   do
