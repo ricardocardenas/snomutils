@@ -2,47 +2,54 @@
 
 # defaults
 progname="$(basename $0)"
-macprefix="000413"
+macprefix=""
 realm="asterisk"
-password="888aaa"
+password=""
 addlxml=""
 userhost=""
 identities=""
 numidentity=0
+pflag=false
 
 usage="$progname: Create SNOM provisioning XML file.
 
 Usage: $progname [-x <macprefix>] [-r <realm>] [-p <password>] [-i <additional XML text>]
                     [-g <user_host_ip_or_name>] <macsuffix> <extension> [<extension>...]
   -p: SIP password
-  -x: macprefix (default: 000413)
+  -x: macprefix (default: <none>)
   -r: realm of SIP server (default: asterisk)
   -g: user_host (Snom parameter, SIP registration host)
   -a: include additional XML text in config file phone settings
   -h: print help and exit
 
 Examples: \"$progname -x 000412 -r pbxrealm -p 84aa83 -g 190.187.43.2 3BFA37 301\" generates 0004123BFA37.xml
-          \"$progname -a '<dhcp perm=\"\">on</dhcp>' 3EF23A 7004 7010\" generates 00041333EF23A.xml"
+          \"$progname -a '<dhcp perm=\"\">on</dhcp>' 0004133EF23A 7004 7010\" generates 00041333EF23A.xml"
 
 while getopts :x:r:p:a:g:h flag
   do
     case $flag in
-      p) password="$OPTARG";;
+      p) pflag=true; password="$OPTARG";;
       x) macprefix="$OPTARG";;
       r) realm="$OPTARG";;
       g) userhost="$OPTARG";;
       a) addlxml="$OPTARG
 ";;
       h) echo "$usage"; exit;;
-      \?) echo "Invalid option -$OPTARG"; echo "$usage"; exit;;
+      \?) echo "Invalid option -$OPTARG"; echo "$usage"; exit 1;;
     esac
   done
 shift $(( OPTIND - 1 ))  # shift past the last flag or argument
 
 if [ $# -lt 2 ]
 then
-  echo "$usage"
-  exit
+  echo "$progname: Error: insufficient arguments."
+  exit 1
+fi
+
+if ! $pflag
+then
+  echo "$progname: Error: password must be specified."
+  exit 1
 fi
 
 mac=$1; xmlfile=`echo -n $macprefix$mac | tr '[a-z]' '[A-Z]'`.xml
