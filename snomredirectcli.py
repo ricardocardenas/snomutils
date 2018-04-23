@@ -37,6 +37,7 @@ snomTypeMap = {
     "40" : "snom820",
     "41" : "snom870",
     "45" : "snom821",
+    "4A" : "snom300",
     "50" : "snom300",
     "51" : "snom320", # (Vodafone)
     "52" : "snom370", # (Vodafone)
